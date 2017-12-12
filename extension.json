@@ -1,0 +1,35 @@
+{
+  "name": "Disqus",
+  "author": [
+      "Gizeta"
+  ],
+  "url": "https://github.com/kcwikizh/mediawiki-extensions-disqus",
+  "descriptionmsg": "disqus-desc",
+  "version": "0.1.0",
+  "license-name": "MIT",
+  "type": "other",
+  "MessagesDirs": {
+      "Disqus": [
+          "i18n"
+      ]
+  },
+  "Hooks": {
+      "ParserFirstCallInit": [
+          "Disqus::onParserFirstCallInit"
+      ],
+      "SkinAfterContent": [
+          "Disqus::onSkinAfterContent"
+      ],
+      "BeforePageDisplay": [
+          "Disqus::onBeforePageDisplay"
+      ]
+  },
+  "AutoloadClasses": {
+      "Disqus": "Disqus_body.php"
+  },
+  "ResourceModules": {
+  },
+  "ResourceFileModulePaths": {
+  },
+  "manifest_version": 1
+}
