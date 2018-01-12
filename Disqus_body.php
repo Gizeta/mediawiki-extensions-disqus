@@ -83,9 +83,9 @@ class Disqus {
         }];
         
         var disq = new iDisqus('comment', {
-          forum: '舰娘百科',
+          forum: 'kcwikizh',
           site: 'https://zh.kcwiki.org',
-          api: 'https://disqus.kcwiki.org/api',
+          api: 'https://disqus.kcwiki.org/api-wiki',
           mode: 2,
           timeout: 3000,
           init: true,
