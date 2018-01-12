@@ -29,8 +29,8 @@ class Disqus {
     }
   
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
-        $out->addHeadItem('<link href="//disqus.kcwiki.org/dist/iDisqus.min.css" rel="stylesheet">');
-        $out->addHeadItem('<script src="//disqus.kcwiki.org/dist/iDisqus.min.js"></script>');
+        $out->addHeadItem('iDisqus-css', '<link href="//disqus.kcwiki.org/dist/iDisqus.min.css" rel="stylesheet">');
+        $out->addHeadItem('iDisqus-js', '<script src="//disqus.kcwiki.org/dist/iDisqus.min.js"></script>');
         $out->addInlineScript(<<<eot
         var emojiList = [{
           code:'smile',
