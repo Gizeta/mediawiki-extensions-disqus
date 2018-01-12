@@ -24,7 +24,7 @@ class Disqus {
             || $wgRequest->getVal('action', 'view') != "view")
             return true;
         
-        $data = '<div class="comment"></div>';
+        $data = '<div id="comment"></div>';
         return true;
     }
   
