@@ -24,7 +24,8 @@ class Disqus {
             || $wgRequest->getVal('action', 'view') != "view")
             return true;
         
-        return '<div class="disqus-comment"></div>';
+        $data = '<div class="comment"></div>';
+        return true;
     }
   
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
