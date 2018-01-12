@@ -22,6 +22,9 @@
       ],
       "BeforePageDisplay": [
           "Disqus::onBeforePageDisplay"
+      ],
+      "BeforePageDisplayMobile": [
+          "Disqus::onBeforePageDisplayMobile"
       ]
   },
   "AutoloadClasses": {

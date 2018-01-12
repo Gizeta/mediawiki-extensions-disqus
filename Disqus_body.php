@@ -24,7 +24,7 @@ class Disqus {
             || $wgRequest->getVal('action', 'view') != "view")
             return true;
         
-        $data = '<div id="comment"></div>';
+        $data .= '<div id="comment"></div>';
         return true;
     }
   
@@ -96,6 +96,23 @@ class Disqus {
         document.getElementsByClassName("comment-form-url")[0].style.display = 'none';
 eot
         );
+        return true;
+    }
+
+    public static function onBeforePageDisplayMobile(OutputPage $out) {
+        global $wgTitle, $wgRequest;
+
+        if($wgTitle->isSpecialPage()
+            || $wgTitle->getArticleID() == 0
+            || !$wgTitle->canTalk()
+            || $wgTitle->isTalkPage()
+            || method_exists($wgTitle, 'isMainPage') && $wgTitle->isMainPage()
+            || in_array($wgTitle->getNamespace(), array(NS_MEDIAWIKI, NS_TEMPLATE, NS_CATEGORY))
+            || $out->isPrintable()
+            || $wgRequest->getVal('action', 'view') != "view")
+            return true;
+      
+        $out->addHTML('<div id="comment"></div>');
         return true;
     }
 }
