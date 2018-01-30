@@ -29,6 +29,9 @@ class Disqus {
     }
   
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
+        global $wgTitle;
+        $title = $wgTitle->getPrefixedText();
+        
         $out->addHeadItem('iDisqus-css', '<link href="//disqus.kcwiki.org/dist/iDisqus.min.css" rel="stylesheet">');
         $out->addHeadItem('iDisqus-js', '<script src="//disqus.kcwiki.org/dist/iDisqus.min.js"></script>');
         $out->addInlineScript(<<<eot
@@ -84,13 +87,15 @@ class Disqus {
         
         var disq = new iDisqus('comment', {
           forum: 'kcwikizh',
+          url: '/wiki/$title',
           site: 'https://zh.kcwiki.org',
           api: 'https://disqus.kcwiki.org/api-wiki',
           mode: 2,
           timeout: 3000,
           init: true,
           emoji_list: emojiList,
-          emoji_preview: true
+          emoji_preview: true,
+          auto: true
         });
         
         document.getElementsByClassName("comment-form-url")[0].style.display = 'none';
