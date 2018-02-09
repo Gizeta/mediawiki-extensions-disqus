@@ -8,11 +8,19 @@ class Disqus {
     }
 
     public static function render($input, $params, $parser, $frame) {
-        return '<div id="comment"></div>';
+        global $wgExtDisqus, $wgExtDisqusThread;
+        if (isset($params['thread'])) {
+            $wgExtDisqusThread = $params['thread'];
+        }
+        if (isset($params['force'])) {
+            $wgExtDisqus = true;
+            return '<div id="comment"></div>';
+        }
+        return '';
     }
 
     public static function onSkinAfterContent(&$data, Skin $skin) {
-        global $wgTitle, $wgRequest, $wgOut;
+        global $wgTitle, $wgRequest, $wgOut, $wgExtDisqus;
 
         if($wgTitle->isSpecialPage()
             || $wgTitle->getArticleID() == 0
@@ -24,13 +32,17 @@ class Disqus {
             || $wgRequest->getVal('action', 'view') != "view")
             return true;
         
-        $data .= '<div id="comment"></div>';
+        if (!$wgExtDisqus)
+            $data .= '<div id="comment"></div>';
         return true;
     }
   
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
-        global $wgTitle;
-        $title = $wgTitle->getPrefixedText();
+        global $wgTitle, $wgExtDisqusThread;
+        if (isset($wgExtDisqusThread))
+            $title = $wgExtDisqusThread;
+        else
+            $title = $wgTitle->getPrefixedText();
         
         $out->addHeadItem('iDisqus-css', '<link href="//disqus.kcwiki.org/dist/iDisqus.min.css" rel="stylesheet">');
         $out->addHeadItem('iDisqus-js', '<script src="//disqus.kcwiki.org/dist/iDisqus.min.js"></script>');
