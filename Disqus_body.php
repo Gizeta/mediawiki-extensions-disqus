@@ -43,8 +43,8 @@ class Disqus {
         global $wgTitle, $wgExtDisqusThread;
         $title = $wgTitle->getPrefixedText();
         
-        $out->addHeadItem('iDisqus-css', '<link href="//disqus.kcwiki.org/dist/iDisqus.min.css" rel="stylesheet">');
-        $out->addHeadItem('iDisqus-js', '<script src="//disqus.kcwiki.org/dist/iDisqus.min.js"></script>');
+        $out->addHeadItem('iDisqus-css', '<link href="//static.kcwiki.org/iDisqus.min.css" rel="stylesheet">');
+        $out->addHeadItem('iDisqus-js', '<script src="//static.kcwiki.org/iDisqus.min.js"></script>');
         $out->addInlineScript(<<<eot
         var emojiList = [{
           code:'smile',
