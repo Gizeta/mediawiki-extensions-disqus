@@ -8,15 +8,18 @@ class Disqus {
     }
 
     public static function render($input, $params, $parser, $frame) {
-        global $wgExtDisqus, $wgExtDisqusThread;
+        $content = "<script>";
         if (isset($params['thread'])) {
-            $wgExtDisqusThread = $params['thread'];
+            $content .= "var wgExtDisqusThread = '" . $params['thread'] . "';";
         }
         if (isset($params['force'])) {
-            $wgExtDisqus = true;
-            return '<div id="comment"></div>';
+            $content .= "var wgExtDisqusDom = 'comment-here';";
         }
-        return '';
+        $content .= "</script>"; 
+        if (isset($params['force'])) {
+            $content .= '<div id="comment-here"></div>';
+        }
+        return $content;
     }
 
     public static function onSkinAfterContent(&$data, Skin $skin) {
@@ -97,10 +100,12 @@ class Disqus {
           unicode:'1f60f'
         }];
         
-        if (document.getElementById('comment')) {
-          var disq = new iDisqus('comment', {
+        var disqusThread = wgExtDisqusThread || '$title';
+        var disqusDom = wgExtDisqusDom || 'comment';
+        if (document.getElementById(disqusDom)) {
+          var disq = new iDisqus(disqusDom, {
             forum: 'kcwikizh',
-            url: '/wiki/$title',
+            url: '/wiki/' + disqusThread,
             site: 'https://zh.kcwiki.org',
             api: 'https://disqus.kcwiki.org/api-wiki',
             mode: 2,
