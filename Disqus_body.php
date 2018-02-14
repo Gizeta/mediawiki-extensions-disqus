@@ -23,7 +23,7 @@ class Disqus {
     }
 
     public static function onSkinAfterContent(&$data, Skin $skin) {
-        global $wgTitle, $wgRequest, $wgOut, $wgExtDisqus;
+        global $wgTitle, $wgRequest, $wgOut;
 
         if($wgTitle->isSpecialPage()
             || $wgTitle->getArticleID() == 0
@@ -35,17 +35,13 @@ class Disqus {
             || $wgRequest->getVal('action', 'view') != "view")
             return true;
         
-        if (!$wgExtDisqus)
-            $data .= '<div id="comment"></div>';
+        $data .= '<div id="comment"></div>';
         return true;
     }
   
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
         global $wgTitle, $wgExtDisqusThread;
-        if (isset($wgExtDisqusThread))
-            $title = $wgExtDisqusThread;
-        else
-            $title = $wgTitle->getPrefixedText();
+        $title = $wgTitle->getPrefixedText();
         
         $out->addHeadItem('iDisqus-css', '<link href="//disqus.kcwiki.org/dist/iDisqus.min.css" rel="stylesheet">');
         $out->addHeadItem('iDisqus-js', '<script src="//disqus.kcwiki.org/dist/iDisqus.min.js"></script>');
@@ -100,8 +96,8 @@ class Disqus {
           unicode:'1f60f'
         }];
         
-        var disqusThread = wgExtDisqusThread || '$title';
-        var disqusDom = wgExtDisqusDom || 'comment';
+        var disqusThread = window.wgExtDisqusThread || '$title';
+        var disqusDom = window.wgExtDisqusDom || 'comment';
         if (document.getElementById(disqusDom)) {
           var disq = new iDisqus(disqusDom, {
             forum: 'kcwikizh',
