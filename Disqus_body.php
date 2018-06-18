@@ -42,6 +42,13 @@ class Disqus {
     public static function onBeforePageDisplay(OutputPage &$out, Skin &$skin) {
         global $wgTitle, $wgExtDisqusThread;
         $title = $wgTitle->getPrefixedText();
+        if ($wgTitle->isRedirect()) {
+          $page = WikiPage::factory($wgTitle);
+          $tmpTitle = $page->getRedirectTarget();
+          if ($tmpTitle instanceof Title) {
+            $title = $tmpTitle->getPrefixedText();
+          }
+        }
         
         $out->addHeadItem('iDisqus-css', '<link href="//static.kcwiki.org/iDisqus.min.css" rel="stylesheet">');
         $out->addHeadItem('iDisqus-js', '<script src="//static.kcwiki.org/iDisqus.min.js"></script>');
